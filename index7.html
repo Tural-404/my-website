@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #dadef0; color: #94a3b8; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
+        .glass-panel { background: rgba(20, 15, 42, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.2); }
+
+        #vpn-tunnel {
+            position: absolute; height: 36px; top: 50%; left: 25%; width: 0;
+            transform: translateY(-50%); background: rgba(37, 99, 235, 0.15);
+            border-top: 2px solid #2563eb; border-bottom: 2px solid #2563eb;
+            transition: width 1.2s ease-in-out; z-index: 1;
+        }
+
+        .data-particle {
+            position: absolute; width: 6px; height: 2px; background: #60a5fa;
+            box-shadow: 0 0 8px #60a5fa; animation: move-data 1s linear infinite;
+        }
+
+        @keyframes move-data {
+            from { left: 0%; opacity: 1; }
+            to { left: 100%; opacity: 0; }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col p-6">
+
+    <header class="mb-6 border-l-4 border-blue-500 pl-6">
+        <h1 class="text-3xl font-black uppercase text-white">Remote Security: <span class="text-blue-400">VPN Tunneling</span></h1>
+        <p class="text-[10px] text-blue-800 uppercase tracking-[0.3em]">Module 07 // Virtual Private Network Architecture</p>
+    </header>
+
+    <div class="flex-grow grid grid-cols-12 gap-6 items-center">
+
+        <div class="col-span-8 relative h-[400px] flex items-center justify-between px-12 glass-panel rounded-3xl overflow-hidden">
+            <div id="vpn-tunnel"></div>
+
+            <div class="z-10 text-center">
+                <div class="text-6xl mb-2">🏠</div>
+                <h4 class="text-white text-xs font-bold uppercase">Manager Node</h4>
+                <p class="text-[9px] text-slate-500 font-mono mt-1">192.168.3.20</p>
+            </div>
+
+            <div id="lock-icon" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-all duration-700 scale-50 z-20">
+                <div class="bg-blue-600 p-3 rounded-xl shadow-[0_0_30px_rgba(37,99,235,0.5)] text-2xl text-white">🔒</div>
+            </div>
+
+            <div class="z-10 text-center">
+                <div class="text-6xl mb-2">🏢</div>
+                <h4 class="text-white text-xs font-bold uppercase">TechNova HQ</h4>
+                <p class="text-[9px] text-slate-500 font-mono mt-1">Gateway: Secured</p>
+            </div>
+        </div>
+
+        <div class="col-span-4 space-y-4">
+            <div class="glass-panel p-6 rounded-2xl border-slate-800">
+                <h3 class="text-blue-400 text-xs font-bold uppercase mb-4 tracking-widest border-b border-blue-900/30 pb-2">Technical Brief</h3>
+               <ul class="text-[11px] space-y-3 leading-relaxed text-slate-300">
+                  <li class="flex gap-2">
+                      <span class="text-blue-500">▹</span>
+                      <span>Establishes a **secure tunnel** over the public internet.</span>
+                  </li>
+                  <li class="flex gap-2">
+                      <span class="text-blue-500">▹</span>
+                      <span>Uses **data encapsulation** to mask original network traffic.</span>
+                  </li>
+                  <li class="flex gap-2">
+                      <span class="text-blue-500">▹</span>
+                      <span>**AES-256 Encryption** ensures military-grade data **confidentiality**.</span>
+                  </li>
+                  <li class="flex gap-2">
+                      <span class="text-blue-500">▹</span>
+                      <span>Protects against **Man-in-the-Middle (MITM)** interception attacks.</span>
+                  </li>
+              </ul>
+            </div>
+
+            <div class="glass-panel p-4 rounded-xl border-slate-800 bg-slate-950/50">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[9px] uppercase font-bold text-slate-500">Tunnel Status:</span>
+                    <span id="status-text" class="text-[9px] font-bold text-red-500 uppercase">Disconnected</span>
+                </div>
+                <div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="w-0 h-full bg-blue-500 transition-all duration-[1200ms]"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8 flex justify-center">
+        <button id="connect-btn" onclick="startVPN()" class="px-10 py-4 border border-blue-500 text-blue-500 font-bold uppercase text-[11px] tracking-[0.3em] hover:bg-blue-500 hover:text-white transition-all">
+            [ Establish VPN Tunnel ]
+        </button>
+    </div>
+
+    <script>
+        function startVPN() {
+            const tunnel = document.getElementById('vpn-tunnel');
+            const lock = document.getElementById('lock-icon');
+            const btn = document.getElementById('connect-btn');
+            const status = document.getElementById('status-text');
+            const progress = document.getElementById('progress-bar');
+
+            btn.disabled = true;
+            btn.style.opacity = '0.4';
+
+            // Запуск анимации
+            tunnel.style.width = '42%';
+            progress.style.width = '100%';
+
+            setTimeout(() => {
+                lock.classList.replace('opacity-0', 'opacity-100');
+                lock.classList.replace('scale-50', 'scale-100');
+                status.innerText = "Active / Encrypted";
+                status.classList.replace('text-red-500', 'text-emerald-500');
+
+                // Создание летящих пакетов
+                setInterval(() => {
+                    const p = document.createElement('div');
+                    p.className = 'data-particle';
+                    p.style.top = Math.random() * 20 + 8 + 'px';
+                    tunnel.appendChild(p);
+                    setTimeout(() => p.remove(), 1000);
+                }, 200);
+            }, 1200);
+        }
+    </script>
+</body>
+</html>

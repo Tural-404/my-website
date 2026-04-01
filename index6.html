@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #ffffff; color: #94a3b8; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
+        .glass-panel { background: rgba(199, 215, 253, 0.8); backdrop-filter: blur(8px); border: 1px solid rgba(0, 242, 255, 0.1); }
+        .neon-blue { color: #02565a; filter: drop-shadow(0 0 8px #014144); }
+        .neon-red { color: #ff0055; filter: drop-shadow(0 0 8px #ff0055); }
+        .phish-particle {
+            position: absolute; width: 6px; height: 6px; background: #ff0055;
+            border-radius: 50%; box-shadow: 0 0 10px #ff0055; pointer-events: none;
+        }
+        .log-container::-webkit-scrollbar { width: 3px; }
+        .log-container::-webkit-scrollbar-thumb { background: #738eb9; border-radius: 10px; }
+    </style>
+</head>
+<body class="h-screen flex flex-col p-6">
+
+    <header class="mb-8 border-l-4 border-cyan-600 pl-4">
+        <h1 class="text-2xl font-black uppercase text-white">Email Security <span class="text-cyan-400">&</span> Phishing Defense</h1>
+        <p class="text-[10px] text-cyan-800 uppercase tracking-[0.3em]">Module 06 // Real-time Threat Mitigation</p>
+    </header>
+
+    <main class="flex-grow grid grid-cols-12 gap-6 items-center max-w-7xl mx-auto w-full">
+
+        <div class="col-span-3 glass-panel p-6 rounded-2xl border-red-900/20 text-center relative h-64 flex flex-col justify-center">
+            <div class="text-5xl mb-4 opacity-80">📧</div>
+            <h4 class="text-red-500 font-bold text-xs uppercase tracking-wider">Incoming Phish</h4>
+            <div class="mt-2 text-[9px] text-slate-600 font-mono">[SPOOFED_GATEWAY]</div>
+        </div>
+
+        <div class="col-span-4 flex justify-center">
+            <div id="shield-core" class="relative transition-all duration-500">
+                <svg width="280" height="280" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(0, 242, 255, 0.1)" stroke-width="1" stroke-dasharray="5 5"/>
+                    <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(0, 242, 255, 0.2)" stroke-width="15"/>
+                    <text id="shield-status" x="50%" y="55%" text-anchor="middle" fill="#00f2ff" font-size="18" font-weight="900" class="uppercase">FILTER<br>ACTIVE</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="col-span-5 space-y-4">
+            <div class="glass-panel p-4 rounded-xl flex items-center gap-4 border-emerald-900/20">
+                <span class="text-2xl">🖥️</span>
+                <div class="flex-grow">
+                    <div id="device-tag" class="text-[9px] bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded inline-block font-bold">SYSTEM_SECURE</div>
+                    <p class="text-[10px] text-slate-500 mt-1">Finance Node: 192.168.2.10</p>
+                </div>
+                <div class="text-[18px] opacity-40">🔒</div>
+            </div>
+
+            <div class="glass-panel rounded-xl overflow-hidden border-slate-800">
+                <div class="bg-slate-900/50 px-3 py-1 border-b border-slate-800 text-[8px] text-slate-500 uppercase tracking-widest">Live Defense Log</div>
+                <div id="log-box" class="h-40 p-3 text-[10px] font-mono leading-relaxed overflow-y-auto space-y-1 text-slate-400">
+                    <div>> Ready for inspection...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="mt-8 flex justify-center">
+        <button id="main-btn" onclick="runSimulation()" class="group relative px-10 py-4 bg-transparent">
+            <div class="absolute inset-0 border border-orange-500/50 group-hover:border-orange-500 transition-colors"></div>
+            <div class="absolute inset-0 bg-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <span class="relative text-orange-500 text-xs font-bold uppercase tracking-[0.4em]">
+                [ Start Attack Simulation ]
+            </span>
+        </button>
+    </div>
+
+    <script>
+        function addLog(text, color = 'text-slate-500') {
+            const logBox = document.getElementById('log-box');
+            const entry = document.createElement('div');
+            entry.className = color;
+            entry.innerHTML = `> ${text}`;
+            logBox.appendChild(entry);
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function runSimulation() {
+            const btn = document.getElementById('main-btn');
+            const shield = document.getElementById('shield-status');
+            const device = document.getElementById('device-tag');
+
+            btn.disabled = true;
+            btn.style.opacity = '0.3';
+
+            addLog('Incoming packet from untrusted source...', 'text-cyan-500');
+
+            // Частицы
+            for(let i=0; i<12; i++) {
+                setTimeout(() => {
+                    const p = document.createElement('div');
+                    p.className = 'phish-particle';
+                    p.style.left = '20%';
+                    p.style.top = '50%';
+                    document.body.appendChild(p);
+                    p.animate([{left:'20%'}, {left:'45%', opacity:0}], {duration: 600}).onfinish = () => p.remove();
+                }, i * 80);
+            }
+
+            setTimeout(() => {
+                addLog('CRITICAL: Malicious URL detected!', 'text-red-500 font-bold');
+                addLog('Signature: Trojan.Phish.GEN', 'text-red-400');
+
+                shield.innerHTML = "THREAT<br>BLOCKED";
+                shield.setAttribute('fill', '#ff0055');
+
+                device.innerText = "PHISHING_PREVENTED";
+                device.classList.replace('text-emerald-500', 'text-red-500');
+                device.classList.replace('bg-emerald-500/10', 'bg-red-500/10');
+
+                setTimeout(() => {
+                    shield.innerHTML = "FILTER<br>ACTIVE";
+                    shield.setAttribute('fill', '#00f2ff');
+                    addLog('System integrity verified. All clear.', 'text-emerald-500');
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                }, 2500);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
