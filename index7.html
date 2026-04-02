@@ -5,7 +5,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #dadef0; color: #94a3b8; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
+        body { background-color: #f8fafc; background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 40px 40px; color: #1e293b; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
         .glass-panel { background: rgba(20, 15, 42, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(59, 130, 246, 0.2); }
 
         #vpn-tunnel {
@@ -24,13 +24,41 @@
             from { left: 0%; opacity: 1; }
             to { left: 100%; opacity: 0; }
         }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            padding: 0.95rem 1.5rem;
+            border-radius: 0.9rem;
+            border: 0;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #ffffff;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            box-shadow: 0 16px 34px rgba(37, 99, 235, 0.45);
+        }
+
+        .action-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col p-6">
 
     <header class="mb-6 border-l-4 border-blue-500 pl-6">
-        <h1 class="text-3xl font-black uppercase text-white">Remote Security: <span class="text-blue-400">VPN Tunneling</span></h1>
-        <p class="text-[10px] text-blue-800 uppercase tracking-[0.3em]">Module 07 // Virtual Private Network Architecture</p>
+        <h1 class="text-3xl font-black uppercase text-slate-900">Remote Security: <span class="text-blue-600">VPN Tunneling</span></h1>
+        <p class="text-[10px] text-blue-900 uppercase tracking-[0.3em]">Module 07 // Virtual Private Network Architecture</p>
     </header>
 
     <div class="flex-grow grid grid-cols-12 gap-6 items-center">
@@ -91,8 +119,8 @@
     </div>
 
     <div class="mt-8 flex justify-center">
-        <button id="connect-btn" onclick="startVPN()" class="px-10 py-4 border border-blue-500 text-blue-500 font-bold uppercase text-[11px] tracking-[0.3em] hover:bg-blue-500 hover:text-white transition-all">
-            [ Establish VPN Tunnel ]
+        <button id="connect-btn" onclick="startVPN()" class="action-btn">
+            Establish VPN Tunnel
         </button>
     </div>
 
