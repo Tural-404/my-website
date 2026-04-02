@@ -5,7 +5,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #ffffff; color: #94a3b8; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
+        body { background-color: #f8fafc; background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 40px 40px; color: #1e293b; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
         .glass-panel { background: rgba(199, 215, 253, 0.8); backdrop-filter: blur(8px); border: 1px solid rgba(0, 242, 255, 0.1); }
         .neon-blue { color: #02565a; filter: drop-shadow(0 0 8px #014144); }
         .neon-red { color: #ff0055; filter: drop-shadow(0 0 8px #ff0055); }
@@ -15,13 +15,41 @@
         }
         .log-container::-webkit-scrollbar { width: 3px; }
         .log-container::-webkit-scrollbar-thumb { background: #738eb9; border-radius: 10px; }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            padding: 0.95rem 1.5rem;
+            border-radius: 0.9rem;
+            border: 0;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: #ffffff;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            box-shadow: 0 12px 28px rgba(245, 115, 39, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+            box-shadow: 0 16px 34px rgba(245, 115, 39, 0.45);
+        }
+
+        .action-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 8px 18px rgba(245, 115, 39, 0.25);
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col p-6">
 
     <header class="mb-8 border-l-4 border-cyan-600 pl-4">
-        <h1 class="text-2xl font-black uppercase text-white">Email Security <span class="text-cyan-400">&</span> Phishing Defense</h1>
-        <p class="text-[10px] text-cyan-800 uppercase tracking-[0.3em]">Module 06 // Real-time Threat Mitigation</p>
+        <h1 class="text-2xl font-black uppercase text-slate-900">Email Security <span class="text-cyan-600">&</span> Phishing Defense</h1>
+        <p class="text-[10px] text-cyan-900 uppercase tracking-[0.3em]">Module 06 // Real-time Threat Mitigation</p>
     </header>
 
     <main class="flex-grow grid grid-cols-12 gap-6 items-center max-w-7xl mx-auto w-full">
@@ -62,12 +90,8 @@
     </main>
 
     <div class="mt-8 flex justify-center">
-        <button id="main-btn" onclick="runSimulation()" class="group relative px-10 py-4 bg-transparent">
-            <div class="absolute inset-0 border border-orange-500/50 group-hover:border-orange-500 transition-colors"></div>
-            <div class="absolute inset-0 bg-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <span class="relative text-orange-500 text-xs font-bold uppercase tracking-[0.4em]">
-                [ Start Attack Simulation ]
-            </span>
+        <button id="main-btn" onclick="runSimulation()" class="action-btn">
+            Start Attack Simulation
         </button>
     </div>
 
